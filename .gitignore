@@ -1,0 +1,78 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+env/
+.env
+.venv
+venv/
+backend/.venv/
+*.sqlite3
+.pytest_cache/
+.mypy_cache/
+build/
+dist/
+*.egg-info/
+
+# Node
+node_modules/
+frontend/.next/
+frontend/.turbo/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+package-lock.json
+
+# Next.js
+.next/
+.next/cache/
+.vercel/
+out/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+logs/
+
+# Docker
+**/docker-compose.override.yml
+
+# Misc
+*.bak
+*.swp# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Alembic
+backend/alembic/versions/*.py
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules/
+.next/
+frontend/src/client/
+
+# OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
