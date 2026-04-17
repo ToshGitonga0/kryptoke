@@ -1,11 +1,9 @@
 import { defineConfig } from "@hey-api/openapi-ts"
 
-export default defineConfig({
+const config = {
   input: "./openapi.json",
-  output: {
-    path: "./src/client",
-    clean: true,
-  },
+  // `output` is expected to be a string path in this version of openapi-ts
+  output: "./src/client",
   plugins: [
     "@hey-api/client-axios",
     {
@@ -20,5 +18,7 @@ export default defineConfig({
       type: "json",
     },
   ],
-})
+} as unknown as any
+
+export default defineConfig(config)
 

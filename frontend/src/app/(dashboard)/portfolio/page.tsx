@@ -238,17 +238,17 @@ import { portfolioApi } from "@/lib/api/portfolio";
 import { cn, formatKES, formatPct } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import {
-  ArrowUpRight, Briefcase, TrendingDown, TrendingUp,
+    ArrowUpRight, Briefcase, TrendingDown, TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
 import {
-  Area,
-  AreaChart,
-  Cell,
-  Legend,
-  Pie, PieChart, ResponsiveContainer, Tooltip as RTooltip,
-  XAxis, YAxis,
+    Area,
+    AreaChart,
+    Cell,
+    Legend,
+    Pie, PieChart, ResponsiveContainer, Tooltip as RTooltip,
+    XAxis, YAxis,
 } from "recharts";
 
 const CHART_COLORS = [
@@ -395,7 +395,7 @@ export default function PortfolioPage() {
                 paddingAngle={3}
                 dataKey="value"
               >
-                {pieData.map((entry, idx) => (
+                {pieData.map((entry: any, idx: number) => (
                   <Cell key={idx} fill={entry.color} stroke="transparent" />
                 ))}
               </Pie>

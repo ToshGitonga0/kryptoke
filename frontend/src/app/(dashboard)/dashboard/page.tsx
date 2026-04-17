@@ -90,9 +90,11 @@ export default function DashboardPage() {
       color: pnlPositive ? "positive" : "negative",
       glow:  pnlPositive ? "bg-jungle-500" : "bg-red-500",
     },
+    // holdings may not be part of the typed PortfolioPublic in some responses
+    // cast to any for a robust runtime check
     {
       label: "Holdings",
-      value: `${portfolio?.holdings?.length ?? 0} assets`,
+      value: `${Array.isArray((portfolio as any)?.holdings) ? (portfolio as any).holdings.length : 0} assets`,
       icon:  Leaf,
       color: "text-jungle-400",
       glow:  "bg-jungle-500",
