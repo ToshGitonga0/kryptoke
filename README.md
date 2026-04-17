@@ -1,8 +1,25 @@
 # KryptoKE
 
-KryptoKE is a production-oriented full-stack single-page application for crypto trading built with FastAPI (backend) and Next.js + TypeScript (frontend). The project is tailored for a Kenyan audience and includes a trading simulator, wallet management, orders/escrow flows, MPESA integration hooks, and admin reporting.
+[![CI](https://github.com/ToshGitonga0/kryptoke/actions/workflows/ci.yml/badge.svg)](https://github.com/ToshGitonga0/kryptoke/actions) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-This README provides a polished overview and a concise developer installation guide.
+KryptoKE — full-stack crypto trading app (FastAPI + Next.js). Wallets, orders, MPESA hooks, and a price simulator.
+
+Quick start: docker compose up --build — then visit http://localhost:3000
+
+---
+
+<!-- Hero gallery -->
+<p align="center">
+  <a href="docs/assets/screenshots/dashboard.png"><img src="docs/assets/screenshots/dashboard-thumb.jpg" alt="Dashboard" width="360" /></a>
+  &nbsp;
+  <a href="docs/assets/screenshots/dashboard-darkmode.png"><img src="docs/assets/screenshots/dashboard-darkmode-thumb.jpg" alt="Dashboard (dark mode)" width="360" /></a>
+  <br />
+  <a href="docs/assets/screenshots/portfolio.png"><img src="docs/assets/screenshots/portfolio-thumb.jpg" alt="Portfolio" width="360" /></a>
+  &nbsp;
+  <a href="docs/assets/screenshots/trade.png"><img src="docs/assets/screenshots/trade-thumb.jpg" alt="Trade" width="360" /></a>
+</p>
+
+---
 
 ## Key features
 
