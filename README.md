@@ -166,7 +166,6 @@ MIT — see `LICENSE`.
 
 ---
 
-If you'd like, I can also add a CI badge to the top of this README, a short architecture diagram, or deployment instructions for a target provider (Render, Fly, DigitalOcean, etc.).
 ## Screenshots
 
 ### Gallery
