@@ -135,3 +135,14 @@ MIT — see `LICENSE`.
 ---
 
 If you'd like, I can also add a CI badge to the top of this README, a short architecture diagram, or deployment instructions for a target provider (Render, Fly, DigitalOcean, etc.).
+## Screenshots
+
+### Gallery
+
+<p float="left">
+  <a href="docs/assets/screenshots/dashboard.png"><img src="docs/assets/screenshots/dashboard-thumb.jpg" alt="Dashboard" width="320" /></a>
+  <a href="docs/assets/screenshots/dashboard-darkmode.png"><img src="docs/assets/screenshots/dashboard-darkmode-thumb.jpg" alt="Dashboard (dark mode)" width="320" /></a>
+  <a href="docs/assets/screenshots/portfolio.png"><img src="docs/assets/screenshots/portfolio-thumb.jpg" alt="Portfolio" width="320" /></a>
+  <a href="docs/assets/screenshots/trade.png"><img src="docs/assets/screenshots/trade-thumb.jpg" alt="Trade" width="320" /></a>
+</p>
+
