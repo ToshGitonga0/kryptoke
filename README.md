@@ -8,16 +8,31 @@ Quick start: docker compose up --build — then visit http://localhost:3000
 
 ---
 
-<!-- Hero gallery -->
-<p align="center">
-  <a href="docs/assets/screenshots/dashboard.png"><img src="docs/assets/screenshots/dashboard-thumb.jpg" alt="Dashboard" width="360" /></a>
-  &nbsp;
-  <a href="docs/assets/screenshots/dashboard-darkmode.png"><img src="docs/assets/screenshots/dashboard-darkmode-thumb.jpg" alt="Dashboard (dark mode)" width="360" /></a>
-  <br />
-  <a href="docs/assets/screenshots/portfolio.png"><img src="docs/assets/screenshots/portfolio-thumb.jpg" alt="Portfolio" width="360" /></a>
-  &nbsp;
-  <a href="docs/assets/screenshots/trade.png"><img src="docs/assets/screenshots/trade-thumb.jpg" alt="Trade" width="360" /></a>
-</p>
+<!-- Hero gallery with captions -->
+<figure align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <a href="docs/assets/screenshots/dashboard.png"><img src="docs/assets/screenshots/dashboard-thumb.jpg" alt="Dashboard" width="360" /></a>
+        <figcaption>Dashboard — portfolio overview & market snapshot</figcaption>
+      </td>
+      <td align="center">
+        <a href="docs/assets/screenshots/dashboard-darkmode.png"><img src="docs/assets/screenshots/dashboard-darkmode-thumb.jpg" alt="Dashboard (dark mode)" width="360" /></a>
+        <figcaption>Dashboard (dark mode) — alternate theme</figcaption>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <a href="docs/assets/screenshots/portfolio.png"><img src="docs/assets/screenshots/portfolio-thumb.jpg" alt="Portfolio" width="360" /></a>
+        <figcaption>Portfolio — holdings and performance</figcaption>
+      </td>
+      <td align="center">
+        <a href="docs/assets/screenshots/trade.png"><img src="docs/assets/screenshots/trade-thumb.jpg" alt="Trade" width="360" /></a>
+        <figcaption>Trade — place orders and view order book</figcaption>
+      </td>
+    </tr>
+  </table>
+</figure>
 
 ---
 
