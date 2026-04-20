@@ -15,11 +15,11 @@
 
 - [Screenshots](#screenshots)
 - [Features](#features)
-- [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Quick Start](#quick-start)
 - [Default Seed Credentials](#default-seed-credentials)
 - [Dev Runner](#dev-runner)
+- [Tech Stack](#tech-stack)
 - [Manual Setup](#manual-setup)
 - [Project Structure](#project-structure)
 - [Testing & Linting](#testing--linting)
@@ -77,18 +77,6 @@
 | Order Matching | Buy/sell order engine with portfolio management |
 | Price Simulator | Configurable real-time price feeds for demo and testing |
 | Responsive UI | Mobile-first design with dark mode support |
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Backend | Python 3.11, FastAPI, SQLModel, SQLAlchemy (async), Alembic |
-| Frontend | Next.js 14, TypeScript, Tailwind CSS, Zustand, React Query |
-| Database | PostgreSQL |
-| Auth | JWT (python-jose), bcrypt |
-| CI | GitHub Actions |
 
 ---
 
@@ -189,6 +177,18 @@ Logs are written to:
 logs/backend.log
 logs/frontend.log
 ```
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Python 3.11, FastAPI, SQLModel, SQLAlchemy (async), Alembic |
+| Frontend | Next.js 14, TypeScript, Tailwind CSS, Zustand, React Query |
+| Database | PostgreSQL |
+| Auth | JWT (python-jose), bcrypt |
+| CI | GitHub Actions |
 
 ---
 
