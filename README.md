@@ -23,9 +23,7 @@
 - [Manual Setup](#manual-setup)
 - [Project Structure](#project-structure)
 - [Testing & Linting](#testing--linting)
-- [CI](#ci)
 - [Branching Workflow](#branching-workflow)
-- [Security](#security)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -263,18 +261,6 @@ ruff check .
 cd frontend
 npm run lint
 ```
-
----
-
-## CI
-
-GitHub Actions runs on every push and pull request to `main`:
-
-- Backend: Ruff lint check
-- Frontend: ESLint + Next.js build
-
-See `.github/workflows/ci.yml` for the full pipeline configuration.
-
 ---
 
 ## Branching Workflow
@@ -289,15 +275,6 @@ git push -u origin HEAD
 # merge after review
 git checkout main && git pull origin main
 ```
----
-
-## Security
-
-- Never commit `.env` files — they are listed in `.gitignore`
-- Use `backend/.env.example` as your configuration template
-- For production and CI, inject secrets via environment variables or GitHub Actions Secrets
-- Rotate `SECRET_KEY` before any public deployment
-
 ---
 
 ## Contributing
