@@ -51,13 +51,22 @@ start_backend() {
 }
 
 stop_backend() {
+  # Kill by PID file first
   if [ -f "$LOG_DIR/backend.pid" ]; then
     kill "$(cat "$LOG_DIR/backend.pid")" 2>/dev/null \
-      && print_success "Backend stopped" \
-      || print_warning "Backend was not running"
+      && print_success "Backend stopped (pid file)" \
+      || print_warning "Backend PID was stale"
     rm -f "$LOG_DIR/backend.pid"
+  fi
+  # Kill anything still holding the port (handles orphaned processes)
+  local pid
+  pid=$(lsof -ti tcp:"${BACKEND_PORT:-8000}" 2>/dev/null || true)
+  if [ -n "$pid" ]; then
+    kill $pid 2>/dev/null \
+      && print_success "Killed orphaned process on port ${BACKEND_PORT:-8000} (pid $pid)" \
+      || print_warning "Could not kill pid $pid"
   else
-    print_warning "No backend PID file found"
+    print_warning "No process found on port ${BACKEND_PORT:-8000}"
   fi
 }
 
@@ -77,13 +86,22 @@ start_frontend() {
 }
 
 stop_frontend() {
+  # Kill by PID file first
   if [ -f "$LOG_DIR/frontend.pid" ]; then
     kill "$(cat "$LOG_DIR/frontend.pid")" 2>/dev/null \
-      && print_success "Frontend stopped" \
-      || print_warning "Frontend was not running"
+      && print_success "Frontend stopped (pid file)" \
+      || print_warning "Frontend PID was stale"
     rm -f "$LOG_DIR/frontend.pid"
+  fi
+  # Kill anything still holding the port (handles orphaned processes)
+  local pid
+  pid=$(lsof -ti tcp:"${FRONTEND_PORT:-3000}" 2>/dev/null || true)
+  if [ -n "$pid" ]; then
+    kill $pid 2>/dev/null \
+      && print_success "Killed orphaned process on port ${FRONTEND_PORT:-3000} (pid $pid)" \
+      || print_warning "Could not kill pid $pid"
   else
-    print_warning "No frontend PID file found"
+    print_warning "No process found on port ${FRONTEND_PORT:-3000}"
   fi
 }
 
@@ -106,10 +124,10 @@ usage() {
   printf "\n${CYAN}${BOLD}KryptoKE Dev Runner${NC}\n\n"
   printf "Usage: %s <command> [target]\n\n" "$(basename "$0")"
   printf "Commands:\n"
-  printf "  start  [backend|frontend|both]   Start service(s)   default: both\n"
-  printf "  stop   [backend|frontend|both]   Stop service(s)    default: both\n"
-  printf "  restart [backend|frontend|both]  Restart service(s) default: both\n"
-  printf "  logs   [backend|frontend|both]   Tail logs          default: both\n\n"
+  printf "  start   [backend|frontend|both]   Start service(s)   default: both\n"
+  printf "  stop    [backend|frontend|both]   Stop service(s)    default: both\n"
+  printf "  restart [backend|frontend|both]   Restart service(s) default: both\n"
+  printf "  logs    [backend|frontend|both]   Tail logs          default: both\n\n"
   printf "Examples:\n"
   printf "  ./scripts/dev.sh start\n"
   printf "  ./scripts/dev.sh start backend\n"

@@ -158,13 +158,17 @@ NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
 
 ---
 
-## Stopping Background Servers
+## Dev Runner
 
-If you used the quickstart script, both servers run in the background. Stop them with:
+After the initial quickstart, use `dev.sh` to manage the servers:
 
 ```bash
-kill $(cat logs/backend.pid)
-kill $(cat logs/frontend.pid)
+./scripts/dev.sh start              # start both
+./scripts/dev.sh start backend      # backend only
+./scripts/dev.sh stop               # stop both (also clears orphaned port processes)
+./scripts/dev.sh restart frontend   # restart frontend only
+./scripts/dev.sh logs               # tail both logs
+./scripts/dev.sh logs backend       # tail backend log only
 ```
 
 Logs are written to `logs/backend.log` and `logs/frontend.log`.
