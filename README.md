@@ -2,8 +2,32 @@
 
 [![CI](https://github.com/ToshGitonga0/kryptoke/actions/workflows/ci.yml/badge.svg)](https://github.com/ToshGitonga0/kryptoke/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 
-KryptoKE is a full-stack crypto trading platform built for the Kenyan market. It features JWT auth, role-based access, wallets, order matching, M-Pesa integration hooks, and a price simulator — backed by FastAPI and Next.js.
+> A full-stack crypto trading platform built for the Kenyan market — featuring real-time order matching, M-Pesa integration hooks, role-based access, and a live price simulator.
+
+---
+
+## Table of Contents
+
+- [Screenshots](#screenshots)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [Default Seed Credentials](#default-seed-credentials)
+- [Dev Runner](#dev-runner)
+- [Manual Setup](#manual-setup)
+- [Project Structure](#project-structure)
+- [Testing & Linting](#testing--linting)
+- [CI](#ci)
+- [Branching Workflow](#branching-workflow)
+- [Security](#security)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
@@ -44,47 +68,72 @@ KryptoKE is a full-stack crypto trading platform built for the Kenyan market. It
 
 ## Features
 
-- JWT authentication with email/password
-- Role-based access: admin, staff, customer
-- Wallets, deposits, withdrawals, and M-Pesa integration hooks
-- Order matching and portfolio management
-- Price simulator for demo and training
-- Responsive UI built with Next.js, Zustand, and React Query
+| Feature | Description |
+|---|---|
+| JWT Authentication | Secure email/password login with token refresh |
+| Role-Based Access | Admin, staff, and customer roles with scoped permissions |
+| Wallets | Deposits, withdrawals, and balance tracking per user |
+| M-Pesa Integration | Hooks for Safaricom Daraja STK push and C2B payments |
+| Order Matching | Buy/sell order engine with portfolio management |
+| Price Simulator | Configurable real-time price feeds for demo and testing |
+| Responsive UI | Mobile-first design with dark mode support |
 
 ---
 
 ## Tech Stack
 
-| Layer     | Technology                                                      |
-|-----------|-----------------------------------------------------------------|
-| Backend   | Python 3.11, FastAPI, SQLModel, SQLAlchemy (async), Alembic     |
-| Frontend  | Next.js 14, TypeScript, Tailwind CSS                            |
-| Database  | PostgreSQL                                                      |
-| CI        | GitHub Actions                                                  |
+| Layer | Technology |
+|---|---|
+| Backend | Python 3.11, FastAPI, SQLModel, SQLAlchemy (async), Alembic |
+| Frontend | Next.js 14, TypeScript, Tailwind CSS, Zustand, React Query |
+| Database | PostgreSQL |
+| Auth | JWT (python-jose), bcrypt |
+| CI | GitHub Actions |
 
 ---
 
 ## Prerequisites
 
-- Git
-- Python 3.11+
-- Node 18+ and npm
-- PostgreSQL (running locally)
-- [`uv`](https://github.com/astral-sh/uv) — Python dependency manager
+Before you begin, make sure the following are installed and available on your `PATH`:
+
+- [Git](https://git-scm.com/)
+- [Python 3.11+](https://www.python.org/downloads/)
+- [Node.js 18+ and npm](https://nodejs.org/)
+- [PostgreSQL](https://www.postgresql.org/download/) — running locally
+- [uv](https://github.com/astral-sh/uv) — fast Python dependency manager
+
+To install `uv`:
+
+```bash
+curl -Lsf https://astral.sh/uv/install.sh | sh
+```
 
 ---
 
 ## Quick Start
 
-**Step 1 — One-time setup** (run once from the repo root):
+### Step 1 — One-time setup
+
+Clone the repo and run the quickstart script from the repo root:
 
 ```bash
+git clone https://github.com/ToshGitonga0/kryptoke.git
+cd kryptoke
 ./scripts/quickstart-no-docker.sh
 ```
 
-This sets up your environment, database, migrations, and seeds default data. You only need to run this once.
+The script will:
 
-**Step 2 — Start the project:**
+1. Verify all prerequisites
+2. Prompt you for your PostgreSQL credentials and generate a `.env`
+3. Create a Python virtual environment and sync dependencies with `uv`
+4. Create the database if it doesn't exist
+5. Run Alembic migrations
+6. Seed the database with default users and crypto assets
+
+You only need to run this once.
+
+### Step 2 — Start the project
 
 ```bash
 ./scripts/dev.sh start
@@ -92,45 +141,60 @@ This sets up your environment, database, migrations, and seeds default data. You
 
 Then visit:
 
-- Frontend: http://localhost:3000
-- Backend API docs: http://localhost:8000/docs
+| Service | URL |
+|---|---|
+| Frontend | http://localhost:3000 |
+| Backend API docs | http://localhost:8000/docs |
 
 ---
 
 ## Default Seed Credentials
 
-| Role     | Email                        | Password        |
-|----------|------------------------------|-----------------|
-| admin    | admin@kryptoke.co.ke         | Admin@2024!     |
-| staff    | staff@kryptoke.co.ke         | Staff@2024!     |
-| customer | james.mwangi@gmail.com       | Customer@2024!  |
-| customer | aisha.omar@gmail.com         | Customer@2024!  |
-| customer | peter.njoroge@yahoo.com      | Customer@2024!  |
-| customer | mercy.kamau@gmail.com        | Customer@2024!  |
-| customer | brian.otieno@gmail.com       | Customer@2024!  |
+| Role | Email | Password |
+|---|---|---|
+| admin | admin@kryptoke.co.ke | Admin@2024! |
+| staff | staff@kryptoke.co.ke | Staff@2024! |
+| customer | james.mwangi@gmail.com | Customer@2024! |
+| customer | aisha.omar@gmail.com | Customer@2024! |
+| customer | peter.njoroge@yahoo.com | Customer@2024! |
+| customer | mercy.kamau@gmail.com | Customer@2024! |
+| customer | brian.otieno@gmail.com | Customer@2024! |
+
+> These credentials are for local development only. Never use them in production.
 
 ---
 
 ## Dev Runner
 
-Use `dev.sh` to manage the servers day-to-day:
+After the initial setup, use `dev.sh` for all day-to-day server management:
 
 ```bash
-./scripts/dev.sh start              # start both
-./scripts/dev.sh start backend      # backend only
-./scripts/dev.sh stop               # stop both (also clears orphaned port processes)
+./scripts/dev.sh start              # start both servers
+./scripts/dev.sh start backend      # start backend only
+./scripts/dev.sh start frontend     # start frontend only
+./scripts/dev.sh stop               # stop both servers
+./scripts/dev.sh stop backend       # stop backend only
+./scripts/dev.sh restart            # restart both servers
 ./scripts/dev.sh restart frontend   # restart frontend only
-./scripts/dev.sh logs               # tail both logs
+./scripts/dev.sh logs               # tail logs for both
 ./scripts/dev.sh logs backend       # tail backend log only
+./scripts/dev.sh logs frontend      # tail frontend log only
 ```
 
-Logs are written to `logs/backend.log` and `logs/frontend.log`.
+> `stop` also kills any orphaned processes holding the configured ports, so stale processes from previous runs are always cleaned up.
+
+Logs are written to:
+
+```
+logs/backend.log
+logs/frontend.log
+```
 
 ---
 
 ## Manual Setup
 
-If you prefer to run each step yourself:
+If you prefer full control over each step:
 
 ### Backend
 
@@ -139,7 +203,7 @@ cd backend
 python -m venv .venv
 source .venv/bin/activate
 uv sync
-cp .env.example .env   # then edit DB_* and SECRET_KEY values
+cp .env.example .env        # edit DB_* and SECRET_KEY
 alembic upgrade head
 python seed.py
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
@@ -153,7 +217,7 @@ npm install
 npm run dev
 ```
 
-If you need a custom API URL, create `frontend/.env.local`:
+To override the API URL, create `frontend/.env.local`:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
@@ -161,9 +225,37 @@ NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
 
 ---
 
+## Project Structure
+
+```
+kryptoke/
+├── backend/
+│   ├── app/
+│   │   ├── api/          # Route handlers
+│   │   ├── core/         # Config, security, dependencies
+│   │   ├── models/       # SQLModel table definitions
+│   │   ├── schemas/      # Pydantic request/response schemas
+│   │   └── services/     # Business logic
+│   ├── alembic/          # Database migrations
+│   ├── seed.py           # Database seeder
+│   └── .env.example
+├── frontend/
+│   ├── app/              # Next.js app router pages
+│   ├── components/       # Reusable UI components
+│   ├── lib/              # API client, hooks, store
+│   └── public/
+├── scripts/
+│   ├── quickstart-no-docker.sh
+│   └── dev.sh
+├── logs/
+└── docs/
+```
+
+---
+
 ## Testing & Linting
 
-**Backend (Ruff):**
+**Backend — Ruff:**
 
 ```bash
 cd backend
@@ -171,7 +263,7 @@ pip install ruff
 ruff check .
 ```
 
-**Frontend (ESLint):**
+**Frontend — ESLint:**
 
 ```bash
 cd frontend
@@ -182,36 +274,55 @@ npm run lint
 
 ## CI
 
-GitHub Actions runs backend lint/tests and a frontend build on every push and pull request. See `.github/workflows/ci.yml`.
+GitHub Actions runs on every push and pull request to `main`:
+
+- Backend: Ruff lint check
+- Frontend: ESLint + Next.js build
+
+See `.github/workflows/ci.yml` for the full pipeline configuration.
 
 ---
 
 ## Branching Workflow
 
-Work on feature branches, not directly on `main`:
+Work on feature branches — never commit directly to `main`:
 
 ```bash
 git checkout -b feat/your-feature
-# make changes, commit
+# make your changes and commit
 git push -u origin HEAD
-# open a PR on GitHub, merge after review
+# open a pull request on GitHub
+# merge after review
 git checkout main && git pull origin main
 ```
+
+Branch naming conventions:
+
+| Prefix | Purpose |
+|---|---|
+| `feat/` | New features |
+| `fix/` | Bug fixes |
+| `docs/` | Documentation updates |
+| `chore/` | Maintenance and tooling |
+| `refactor/` | Code restructuring |
 
 ---
 
 ## Security
 
-Never commit `.env` files. Use `backend/.env.example` as your template. For production and CI, inject secrets via environment variables or GitHub Actions Secrets.
+- Never commit `.env` files — they are listed in `.gitignore`
+- Use `backend/.env.example` as your configuration template
+- For production and CI, inject secrets via environment variables or GitHub Actions Secrets
+- Rotate `SECRET_KEY` before any public deployment
 
 ---
 
 ## Contributing
 
-See `CONTRIBUTING.md` for contribution guidelines, branch strategy, and code style.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines, branch strategy, and code style expectations.
 
 ---
 
 ## License
 
-MIT — see `LICENSE`.
+MIT — see [LICENSE](LICENSE).
