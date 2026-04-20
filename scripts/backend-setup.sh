@@ -33,8 +33,22 @@ get_config() {
   read -r -p "PostgreSQL database name     [postgres]: " DB_NAME; DB_NAME=${DB_NAME:-postgres}
   read -r -p "PostgreSQL username          [postgres]: " DB_USER; DB_USER=${DB_USER:-postgres}
   read -rsp "PostgreSQL password (input hidden): " DB_PASSWORD; echo ""
-  read -r -p "PostgreSQL host              [localhost]: " DB_HOST; DB_HOST=${DB_HOST:-localhost}
-  read -r -p "PostgreSQL port              [5432]: " DB_PORT; DB_PORT=${DB_PORT:-5432}
+  echo "Postgres host/port presets:"
+  echo "  1) local   -> localhost:5432"
+  echo "  2) docker  -> db:5432 (use when running Postgres in a compose network)"
+  echo "  3) custom"
+  read -r -p "Choose preset [1/2/3] (default 1): " preset
+  preset=${preset:-1}
+  if [[ "$preset" == "2" ]]; then
+    DB_HOST="db"
+    DB_PORT="5432"
+  elif [[ "$preset" == "3" ]]; then
+    read -r -p "PostgreSQL host              [localhost]: " DB_HOST; DB_HOST=${DB_HOST:-localhost}
+    read -r -p "PostgreSQL port              [5432]: " DB_PORT; DB_PORT=${DB_PORT:-5432}
+  else
+    DB_HOST="localhost"
+    DB_PORT="5432"
+  fi
   echo ""
   echo -e "${CYAN}  Database: ${DB_USER}@${DB_HOST}:${DB_PORT}/${DB_NAME}${NC}"
   echo ""
@@ -84,6 +98,31 @@ print(secrets.token_urlsafe(32))
 PY
 )
     print_ok "Generated SECRET_KEY"
+  fi
+
+  # Preview (mask password)
+  mask_password() {
+    local pw="$1"
+    if [[ ${#pw} -le 2 ]]; then
+      echo "***"
+    else
+      echo "${pw:0:1}***${pw: -1}"
+    fi
+  }
+
+  MASKED_PW=$(mask_password "$DB_PASSWORD")
+  echo "\n.env will be written with the following values:" 
+  echo "SECRET_KEY=\"$SECRET_KEY\""
+  echo "DB_NAME=\"$DB_NAME\""
+  echo "DB_USER=\"$DB_USER\""
+  echo "DB_PASSWORD=\"$MASKED_PW\"  (actual password will be written to file)"
+  echo "DB_HOST=\"$DB_HOST\""
+  echo "DB_PORT=\"$DB_PORT\""
+  echo ""
+  read -r -p "Write these values to $ENV_FILE? [Y/n] " confirm_write
+  if [[ "${confirm_write,,}" == "n" ]]; then
+    print_error "Aborted by user. No changes written."
+    return 1
   fi
 
   # Write values (quote values to be safe)
