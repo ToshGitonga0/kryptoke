@@ -228,7 +228,7 @@ kryptoke/
 │   │   ├── api/          # Route handlers
 │   │   ├── core/         # Config, security, dependencies
 │   │   ├── models/       # SQLModel table definitions
-│   │   ├── schemas/      # Pydantic request/response schemas
+│   │   ├── repos/        # database logic
 │   │   └── services/     # Business logic
 │   ├── alembic/          # Database migrations
 │   ├── seed.py           # Database seeder
