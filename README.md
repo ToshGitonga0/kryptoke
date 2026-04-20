@@ -76,23 +76,21 @@ KryptoKE is a full-stack crypto trading platform built for the Kenyan market. It
 
 ## Quick Start
 
-Run this from the repo root:
+**Step 1 — One-time setup** (run once from the repo root):
 
 ```bash
 ./scripts/quickstart-no-docker.sh
 ```
 
-The script will:
+This sets up your environment, database, migrations, and seeds default data. You only need to run this once.
 
-1. Check all prerequisites
-2. Prompt you for database config and generate a `.env`
-3. Create a Python venv and sync backend dependencies with `uv`
-4. Create the database if it doesn't exist
-5. Run Alembic migrations
-6. Seed the database with default users and assets
-7. Start the backend and frontend dev servers in the background
+**Step 2 — Start the project:**
 
-When complete, visit:
+```bash
+./scripts/dev.sh start
+```
+
+Then visit:
 
 - Frontend: http://localhost:3000
 - Backend API docs: http://localhost:8000/docs
@@ -115,7 +113,7 @@ When complete, visit:
 
 ## Dev Runner
 
-After the initial quickstart, use `dev.sh` to manage the servers day-to-day:
+Use `dev.sh` to manage the servers day-to-day:
 
 ```bash
 ./scripts/dev.sh start              # start both
