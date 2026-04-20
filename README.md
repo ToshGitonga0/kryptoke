@@ -60,6 +60,8 @@ Quick start: docker compose up --build — then visit http://localhost:3000
 - Docker & Docker Compose (optional, recommended)
 - An SSH key configured with GitHub (or use HTTPS)
 
+Note: this project uses the `uv` tool to manage/sync backend dependencies instead of installing via `pip` directly. Make sure `uv` is available in your environment before following the backend steps below.
+
 ---
 
 ## Quick start (recommended — Docker Compose)
@@ -88,28 +90,36 @@ docker compose down
 
 ### Backend
 
-1. Create and activate a virtual environment:
+1. Enter the backend folder, activate the virtual environment, sync dependencies with `uv`, then start the dev server:
+
+```bash
+cd backend
+source .venv/bin/activate
+uv sync
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+If a `.venv` directory doesn't already exist, create one first:
 
 ```bash
 cd backend
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+uv sync
 ```
 
-2. Copy example env and update values:
+2. Copy the example env and update values (if you haven't already):
 
 ```bash
 cp .env.example .env
 # Edit backend/.env: set SECRET_KEY and DB_* values
 ```
 
-3. Run migrations and start the dev server:
+3. Run migrations (make sure Postgres is available locally or via Docker), then start the server if you didn't already:
 
 ```bash
-# Make sure Postgres is available (local or via Docker)
 alembic upgrade head
-uvicorn app.main:app --reload --port 8000
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 ### Frontend
