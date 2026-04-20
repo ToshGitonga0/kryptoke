@@ -51,14 +51,16 @@ KryptoKE is a full-stack crypto trading platform built for the Kenyan market. It
 - Price simulator for demo and training
 - Responsive UI built with Next.js, Zustand, and React Query
 
+---
+
 ## Tech Stack
 
-| Layer     | Technology                                          |
-|-----------|-----------------------------------------------------|
-| Backend   | Python 3.11, FastAPI, SQLModel, SQLAlchemy (async), Alembic |
-| Frontend  | Next.js 14, TypeScript, Tailwind CSS                |
-| Database  | PostgreSQL                                          |
-| Infra     | Docker Compose, GitHub Actions CI                   |
+| Layer     | Technology                                                      |
+|-----------|-----------------------------------------------------------------|
+| Backend   | Python 3.11, FastAPI, SQLModel, SQLAlchemy (async), Alembic     |
+| Frontend  | Next.js 14, TypeScript, Tailwind CSS                            |
+| Database  | PostgreSQL                                                      |
+| CI        | GitHub Actions                                                  |
 
 ---
 
@@ -67,35 +69,20 @@ KryptoKE is a full-stack crypto trading platform built for the Kenyan market. It
 - Git
 - Python 3.11+
 - Node 18+ and npm
-- PostgreSQL (local or via Docker)
-- [`uv`](https://github.com/astral-sh/uv) — used to manage and sync backend dependencies
-
-> Docker and Docker Compose are optional but recommended for the simplest setup.
+- PostgreSQL (running locally)
+- [`uv`](https://github.com/astral-sh/uv) — Python dependency manager
 
 ---
 
-## Quick Start — Docker (Recommended)
+## Quick Start
+
+Run this from the repo root:
 
 ```bash
-docker compose up --build
+./scripts/quickstart-no-docker.sh
 ```
 
-Then visit:
-
-- Frontend: http://localhost:3000
-- Backend API docs: http://localhost:8000/docs
-
-To stop:
-
-```bash
-docker compose down
-```
-
----
-
-## Quick Start — No Docker (One Command)
-
-If you'd rather run everything locally without Docker, use the quickstart script from the repo root. It will:
+The script will:
 
 1. Check all prerequisites
 2. Prompt you for database config and generate a `.env`
@@ -105,13 +92,14 @@ If you'd rather run everything locally without Docker, use the quickstart script
 6. Seed the database with default users and assets
 7. Start the backend and frontend dev servers in the background
 
-```bash
-./scripts/quickstart-no-docker.sh
-```
+When complete, visit:
 
-When the script completes, it prints the URLs and the commands to stop both servers.
+- Frontend: http://localhost:3000
+- Backend API docs: http://localhost:8000/docs
 
-### Default Seed Credentials
+---
+
+## Default Seed Credentials
 
 | Role     | Email                        | Password        |
 |----------|------------------------------|-----------------|
@@ -125,7 +113,24 @@ When the script completes, it prints the URLs and the commands to stop both serv
 
 ---
 
-## Manual Local Setup
+## Dev Runner
+
+After the initial quickstart, use `dev.sh` to manage the servers day-to-day:
+
+```bash
+./scripts/dev.sh start              # start both
+./scripts/dev.sh start backend      # backend only
+./scripts/dev.sh stop               # stop both (also clears orphaned port processes)
+./scripts/dev.sh restart frontend   # restart frontend only
+./scripts/dev.sh logs               # tail both logs
+./scripts/dev.sh logs backend       # tail backend log only
+```
+
+Logs are written to `logs/backend.log` and `logs/frontend.log`.
+
+---
+
+## Manual Setup
 
 If you prefer to run each step yourself:
 
@@ -155,23 +160,6 @@ If you need a custom API URL, create `frontend/.env.local`:
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
 ```
-
----
-
-## Dev Runner
-
-After the initial quickstart, use `dev.sh` to manage the servers:
-
-```bash
-./scripts/dev.sh start              # start both
-./scripts/dev.sh start backend      # backend only
-./scripts/dev.sh stop               # stop both (also clears orphaned port processes)
-./scripts/dev.sh restart frontend   # restart frontend only
-./scripts/dev.sh logs               # tail both logs
-./scripts/dev.sh logs backend       # tail backend log only
-```
-
-Logs are written to `logs/backend.log` and `logs/frontend.log`.
 
 ---
 
