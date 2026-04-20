@@ -289,17 +289,6 @@ git push -u origin HEAD
 # merge after review
 git checkout main && git pull origin main
 ```
-
-Branch naming conventions:
-
-| Prefix | Purpose |
-|---|---|
-| `feat/` | New features |
-| `fix/` | Bug fixes |
-| `docs/` | Documentation updates |
-| `chore/` | Maintenance and tooling |
-| `refactor/` | Code restructuring |
-
 ---
 
 ## Security
