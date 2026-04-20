@@ -99,7 +99,7 @@ Clone the repo and run the quickstart script from the repo root:
 ```bash
 git clone https://github.com/ToshGitonga0/kryptoke.git
 cd kryptoke
-./scripts/quickstart-no-docker.sh
+./scripts/quickstart.sh
 ```
 
 The script will:
