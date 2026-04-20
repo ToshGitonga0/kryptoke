@@ -90,12 +90,6 @@ Before you begin, make sure the following are installed and available on your `P
 - [PostgreSQL](https://www.postgresql.org/download/) — running locally
 - [uv](https://github.com/astral-sh/uv) — fast Python dependency manager
 
-To install `uv`:
-
-```bash
-curl -Lsf https://astral.sh/uv/install.sh | sh
-```
-
 ---
 
 ## Quick Start
