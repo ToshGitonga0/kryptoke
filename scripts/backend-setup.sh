@@ -30,8 +30,8 @@ print_ok() { echo -e "${GREEN}$*${NC}"; }
 
 get_config() {
   print_step "Project configuration"
-  read -r -p "PostgreSQL database name     [kryptoke_db]: " DB_NAME; DB_NAME=${DB_NAME:-kryptoke_db}
-  read -r -p "PostgreSQL username          [tosh]: " DB_USER; DB_USER=${DB_USER:-tosh}
+  read -r -p "PostgreSQL database name     [postgres]: " DB_NAME; DB_NAME=${DB_NAME:-postgres}
+  read -r -p "PostgreSQL username          [postgres]: " DB_USER; DB_USER=${DB_USER:-postgres}
   read -rsp "PostgreSQL password (input hidden): " DB_PASSWORD; echo ""
   read -r -p "PostgreSQL host              [localhost]: " DB_HOST; DB_HOST=${DB_HOST:-localhost}
   read -r -p "PostgreSQL port              [5432]: " DB_PORT; DB_PORT=${DB_PORT:-5432}
