@@ -142,6 +142,42 @@ NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
 
 ## Testing & linting
 
+## Quick interactive setup (one command)
+
+If you want a very short, interactive setup for the backend that guides a new developer through creating a venv, syncing dependencies with `uv`, copying the example env file, running migrations and starting the server, run the script below from the repository root:
+
+```bash
+./scripts/backend-setup.sh
+```
+
+The script will prompt you for confirmation before taking actions. It's designed to keep the steps simple for beginners.
+
+## Branching workflow (recommended)
+
+Working directly on `main` can make collaboration and rollbacks harder. A lightweight branching workflow keeps changes safe and reviewable:
+
+- Create a branch for each task or feature:
+
+```bash
+git checkout -b feat/your-brief-description
+```
+
+- Make commits locally. When ready, push the branch and open a pull request (PR) to `main` for review:
+
+```bash
+git push -u origin HEAD
+# then open a PR on GitHub
+```
+
+- After the PR is approved, merge it to `main` (or use GitHub's UI to squash/merge). Pull `main` locally to keep your repo up to date:
+
+```bash
+git checkout main
+git pull origin main
+```
+
+This keeps `main` stable and makes it easier for young developers to learn good habits.
+
 - Backend linting: Ruff (configured in `backend/pyproject.toml`)
 
 ```bash
