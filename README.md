@@ -123,7 +123,7 @@ Then visit:
 | Service | URL |
 |---|---|
 | Frontend | http://localhost:3000 |
-| Backend API docs | http://localhost:8000/docs |
+| Backend API docs | http://localhost:8000/api/v1/docs |
 
 ---
 
