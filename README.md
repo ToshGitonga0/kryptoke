@@ -1,6 +1,5 @@
 # KryptoKE
 
-[![CI](https://github.com/ToshGitonga0/kryptoke/actions/workflows/ci.yml/badge.svg)](https://github.com/ToshGitonga0/kryptoke/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
@@ -180,7 +179,6 @@ logs/frontend.log
 | Frontend | Next.js 14, TypeScript, Tailwind CSS, Zustand, React Query |
 | Database | PostgreSQL |
 | Auth | JWT (python-jose), bcrypt |
-| CI | GitHub Actions |
 
 ---
 
