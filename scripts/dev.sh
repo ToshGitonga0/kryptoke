@@ -25,7 +25,7 @@ print_error()   { printf "${RED}✗  %s${NC}\n" "$*"; }
 # Load ports from existing .env
 ENV_FILE="$BACKEND_DIR/.env"
 if [ ! -f "$ENV_FILE" ]; then
-  print_error ".env not found — run ./scripts/quickstart-no-docker.sh first"
+  print_error ".env not found — run ./scripts/quickstart.sh first"
   exit 1
 fi
 
