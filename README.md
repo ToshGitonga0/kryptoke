@@ -110,8 +110,6 @@ The script will:
 5. Run Alembic migrations
 6. Seed the database with default users and crypto assets
 
-You only need to run this once.
-
 ### Step 2 — Start the project
 
 ```bash
