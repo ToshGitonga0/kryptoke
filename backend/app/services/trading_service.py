@@ -56,19 +56,14 @@ class TradingService:
         if data.side == "buy":
             # Deduct KES from wallet
             required = total_cost + fee
-            kes_wallet = await self._wallet_service.deduct_balance(
-                user_id, "KES", required
-            )
+            kes_wallet = await self._wallet_service.deduct_balance(user_id, "KES", required)
 
             # Update or create portfolio item
-            portfolio_item = await self._portfolio_repo.get_by_user_and_asset(
-                user_id, asset.id
-            )
+            portfolio_item = await self._portfolio_repo.get_by_user_and_asset(user_id, asset.id)
             if portfolio_item:
                 total_qty = portfolio_item.quantity + data.quantity
                 portfolio_item.avg_buy_price = (
-                    portfolio_item.avg_buy_price * portfolio_item.quantity
-                    + exec_price * data.quantity
+                    portfolio_item.avg_buy_price * portfolio_item.quantity + exec_price * data.quantity
                 ) / total_qty
                 portfolio_item.quantity = total_qty
                 portfolio_item.updated_at = datetime.utcnow()
@@ -87,14 +82,10 @@ class TradingService:
             tx_type = TransactionType.TRADE_BUY
         else:
             # Sell: deduct crypto from wallet
-            await self._wallet_service.deduct_balance(
-                user_id, asset.symbol, data.quantity
-            )
+            await self._wallet_service.deduct_balance(user_id, asset.symbol, data.quantity)
 
             # Reduce portfolio
-            portfolio_item = await self._portfolio_repo.get_by_user_and_asset(
-                user_id, asset.id
-            )
+            portfolio_item = await self._portfolio_repo.get_by_user_and_asset(user_id, asset.id)
             if not portfolio_item or portfolio_item.quantity < data.quantity:
                 raise HTTPException(status_code=400, detail="Insufficient holdings")
             portfolio_item.quantity -= data.quantity
@@ -106,9 +97,7 @@ class TradingService:
 
             # Add KES proceeds (minus fee)
             proceeds = total_cost - fee
-            kes_wallet = await self._wallet_service.add_balance(
-                user_id, "KES", proceeds
-            )
+            kes_wallet = await self._wallet_service.add_balance(user_id, "KES", proceeds)
             tx_type = TransactionType.TRADE_SELL
 
         # Create order record
@@ -153,27 +142,19 @@ class TradingService:
 
         return OrderPublic.model_validate(order)
 
-    async def cancel_order(
-        self, user_id: uuid.UUID, order_id: uuid.UUID
-    ) -> OrderPublic:
+    async def cancel_order(self, user_id: uuid.UUID, order_id: uuid.UUID) -> OrderPublic:
         order = await self._order_repo.get_by_id(order_id)
         if not order:
             raise HTTPException(status_code=404, detail="Order not found")
         if order.user_id != user_id:
             raise HTTPException(status_code=403, detail="Not authorised")
         if order.status != OrderStatus.OPEN:
-            raise HTTPException(
-                status_code=400, detail="Only OPEN orders can be cancelled"
-            )
+            raise HTTPException(status_code=400, detail="Only OPEN orders can be cancelled")
         order.status = OrderStatus.CANCELLED
         order.updated_at = datetime.utcnow()
         order = await self._order_repo.save(order)
         return OrderPublic.model_validate(order)
 
-    async def get_user_orders(
-        self, user_id: uuid.UUID, skip: int = 0, limit: int = 50
-    ) -> OrdersPublic:
+    async def get_user_orders(self, user_id: uuid.UUID, skip: int = 0, limit: int = 50) -> OrdersPublic:
         orders, total = await self._order_repo.get_by_user(user_id, skip, limit)
-        return OrdersPublic(
-            orders=[OrderPublic.model_validate(o) for o in orders], total=total
-        )
+        return OrdersPublic(orders=[OrderPublic.model_validate(o) for o in orders], total=total)

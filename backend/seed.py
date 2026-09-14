@@ -287,7 +287,6 @@ async def seed() -> None:
         print("  ✓ portfolio items")
 
         # ── Past Orders & Trades ─────────────────────────────────────────
-        admin = user_objs[0]
         for user in customers[:3]:
             for _ in range(5):
                 sym = random.choice(["BTC", "ETH", "SOL"])

@@ -22,9 +22,7 @@ class AuthService:
 
         existing_phone = await self._user_repo.get_by_phone(data.phone_number)
         if existing_phone:
-            raise HTTPException(
-                status_code=400, detail="Phone number already registered"
-            )
+            raise HTTPException(status_code=400, detail="Phone number already registered")
 
         user = User(
             email=data.email,

@@ -13,23 +13,13 @@ class OrderRepository(AbstractRepository[Order]):
         self._session = session
 
     async def get_by_id(self, record_id: uuid.UUID) -> Order | None:
-        result = await self._session.execute(
-            select(Order)
-            .options(selectinload(Order.asset))
-            .where(Order.id == record_id)
-        )
+        result = await self._session.execute(select(Order).options(selectinload(Order.asset)).where(Order.id == record_id))
         return result.scalar_one_or_none()
 
-    async def get_by_user(
-        self, user_id: uuid.UUID, skip: int = 0, limit: int = 50
-    ) -> tuple[list[Order], int]:
+    async def get_by_user(self, user_id: uuid.UUID, skip: int = 0, limit: int = 50) -> tuple[list[Order], int]:
         from sqlalchemy import func
 
-        total = (
-            await self._session.execute(
-                select(func.count(Order.id)).where(Order.user_id == user_id)
-            )
-        ).scalar_one()
+        total = (await self._session.execute(select(func.count(Order.id)).where(Order.user_id == user_id))).scalar_one()
         result = await self._session.execute(
             select(Order)
             .options(selectinload(Order.asset))
@@ -60,16 +50,10 @@ class OrderRepository(AbstractRepository[Order]):
         await self._session.flush()
         return record
 
-    async def get_trades_by_user(
-        self, user_id: uuid.UUID, skip: int = 0, limit: int = 50
-    ) -> tuple[list[Trade], int]:
+    async def get_trades_by_user(self, user_id: uuid.UUID, skip: int = 0, limit: int = 50) -> tuple[list[Trade], int]:
         from sqlalchemy import func
 
-        total = (
-            await self._session.execute(
-                select(func.count(Trade.id)).where(Trade.user_id == user_id)
-            )
-        ).scalar_one()
+        total = (await self._session.execute(select(func.count(Trade.id)).where(Trade.user_id == user_id))).scalar_one()
         result = await self._session.execute(
             select(Trade)
             .options(selectinload(Trade.asset))
@@ -80,15 +64,11 @@ class OrderRepository(AbstractRepository[Order]):
         )
         return list(result.scalars().all()), total
 
-    async def get_transactions_by_user(
-        self, user_id: uuid.UUID, skip: int = 0, limit: int = 50
-    ) -> tuple[list[Transaction], int]:
+    async def get_transactions_by_user(self, user_id: uuid.UUID, skip: int = 0, limit: int = 50) -> tuple[list[Transaction], int]:
         from sqlalchemy import func
 
         total = (
-            await self._session.execute(
-                select(func.count(Transaction.id)).where(Transaction.user_id == user_id)
-            )
+            await self._session.execute(select(func.count(Transaction.id)).where(Transaction.user_id == user_id))
         ).scalar_one()
         result = await self._session.execute(
             select(Transaction)

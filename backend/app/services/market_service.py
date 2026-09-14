@@ -17,9 +17,7 @@ class MarketService:
 
     async def list_assets(self) -> AssetsPublic:
         assets = await self._asset_repo.list_all()
-        return AssetsPublic(
-            assets=[AssetPublic.model_validate(a) for a in assets], total=len(assets)
-        )
+        return AssetsPublic(assets=[AssetPublic.model_validate(a) for a in assets], total=len(assets))
 
     async def get_asset(self, symbol: str) -> AssetPublic:
         from fastapi import HTTPException
@@ -36,6 +34,4 @@ class MarketService:
         if not asset:
             raise HTTPException(status_code=404, detail=f"Asset {symbol} not found")
         history = await self._asset_repo.get_price_history(asset.id, limit)
-        return PriceHistoryList(
-            history=[PriceHistoryPublic.model_validate(h) for h in history]
-        )
+        return PriceHistoryList(history=[PriceHistoryPublic.model_validate(h) for h in history])

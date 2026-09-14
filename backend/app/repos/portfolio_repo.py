@@ -14,15 +14,11 @@ class PortfolioRepository(AbstractRepository[PortfolioItem]):
 
     async def get_by_id(self, record_id: uuid.UUID) -> PortfolioItem | None:
         result = await self._session.execute(
-            select(PortfolioItem)
-            .options(selectinload(PortfolioItem.asset))
-            .where(PortfolioItem.id == record_id)
+            select(PortfolioItem).options(selectinload(PortfolioItem.asset)).where(PortfolioItem.id == record_id)
         )
         return result.scalar_one_or_none()
 
-    async def get_by_user_and_asset(
-        self, user_id: uuid.UUID, asset_id: uuid.UUID
-    ) -> PortfolioItem | None:
+    async def get_by_user_and_asset(self, user_id: uuid.UUID, asset_id: uuid.UUID) -> PortfolioItem | None:
         result = await self._session.execute(
             select(PortfolioItem)
             .options(selectinload(PortfolioItem.asset))
@@ -32,9 +28,7 @@ class PortfolioRepository(AbstractRepository[PortfolioItem]):
 
     async def get_by_user(self, user_id: uuid.UUID) -> list[PortfolioItem]:
         result = await self._session.execute(
-            select(PortfolioItem)
-            .options(selectinload(PortfolioItem.asset))
-            .where(PortfolioItem.user_id == user_id)
+            select(PortfolioItem).options(selectinload(PortfolioItem.asset)).where(PortfolioItem.user_id == user_id)
         )
         return list(result.scalars().all())
 

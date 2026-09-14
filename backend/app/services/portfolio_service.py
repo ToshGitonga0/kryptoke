@@ -11,9 +11,7 @@ from app.repos.portfolio_repo import PortfolioRepository
 
 
 class PortfolioService:
-    def __init__(
-        self, portfolio_repo: PortfolioRepository, asset_repo: AssetRepository
-    ) -> None:
+    def __init__(self, portfolio_repo: PortfolioRepository, asset_repo: AssetRepository) -> None:
         self._portfolio_repo = portfolio_repo
         self._asset_repo = asset_repo
 
@@ -50,9 +48,7 @@ class PortfolioService:
             )
 
         total_pnl = total_value - total_invested
-        total_pnl_pct = (
-            (total_pnl / total_invested * 100) if total_invested else Decimal("0")
-        )
+        total_pnl_pct = (total_pnl / total_invested * 100) if total_invested else Decimal("0")
 
         return PortfolioPublic(
             items=enriched,

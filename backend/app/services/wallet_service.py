@@ -35,9 +35,7 @@ SUPPORTED_CURRENCIES = [
 
 
 class WalletService:
-    def __init__(
-        self, wallet_repo: WalletRepository, order_repo: OrderRepository
-    ) -> None:
+    def __init__(self, wallet_repo: WalletRepository, order_repo: OrderRepository) -> None:
         self._wallet_repo = wallet_repo
         self._order_repo = order_repo
 
@@ -53,13 +51,9 @@ class WalletService:
         wallets = await self._wallet_repo.get_by_user(user_id)
         return WalletsPublic(wallets=[WalletPublic.model_validate(w) for w in wallets])
 
-    async def deposit(
-        self, user_id: uuid.UUID, req: WalletDepositRequest
-    ) -> WalletPublic:
+    async def deposit(self, user_id: uuid.UUID, req: WalletDepositRequest) -> WalletPublic:
         if req.amount <= Decimal("0"):
-            raise HTTPException(
-                status_code=400, detail="Deposit amount must be positive"
-            )
+            raise HTTPException(status_code=400, detail="Deposit amount must be positive")
         wallet = await self.get_or_create_wallet(user_id, req.currency)
         wallet.balance += req.amount
         wallet.updated_at = datetime.utcnow()
@@ -78,13 +72,9 @@ class WalletService:
         await self._order_repo.save_transaction(tx)
         return WalletPublic.model_validate(wallet)
 
-    async def withdraw(
-        self, user_id: uuid.UUID, req: WalletWithdrawRequest
-    ) -> WalletPublic:
+    async def withdraw(self, user_id: uuid.UUID, req: WalletWithdrawRequest) -> WalletPublic:
         if req.amount <= Decimal("0"):
-            raise HTTPException(
-                status_code=400, detail="Withdrawal amount must be positive"
-            )
+            raise HTTPException(status_code=400, detail="Withdrawal amount must be positive")
         wallet = await self._wallet_repo.get_by_user_and_currency(user_id, req.currency)
         if not wallet:
             raise HTTPException(status_code=404, detail="Wallet not found")
@@ -108,34 +98,24 @@ class WalletService:
         await self._order_repo.save_transaction(tx)
         return WalletPublic.model_validate(wallet)
 
-    async def deduct_balance(
-        self, user_id: uuid.UUID, currency: str, amount: Decimal
-    ) -> Wallet:
+    async def deduct_balance(self, user_id: uuid.UUID, currency: str, amount: Decimal) -> Wallet:
         wallet = await self._wallet_repo.get_by_user_and_currency(user_id, currency)
         if not wallet or wallet.balance < amount:
-            raise HTTPException(
-                status_code=400, detail=f"Insufficient {currency} balance"
-            )
+            raise HTTPException(status_code=400, detail=f"Insufficient {currency} balance")
         wallet.balance -= amount
         wallet.updated_at = datetime.utcnow()
         return await self._wallet_repo.save(wallet)
 
-    async def add_balance(
-        self, user_id: uuid.UUID, currency: str, amount: Decimal
-    ) -> Wallet:
+    async def add_balance(self, user_id: uuid.UUID, currency: str, amount: Decimal) -> Wallet:
         wallet = await self.get_or_create_wallet(user_id, currency)
         wallet.balance += amount
         wallet.updated_at = datetime.utcnow()
         return await self._wallet_repo.save(wallet)
 
-    async def get_user_transactions(
-        self, user_id: uuid.UUID, skip: int = 0, limit: int = 20
-    ):
+    async def get_user_transactions(self, user_id: uuid.UUID, skip: int = 0, limit: int = 20):
         from app.models.models import TransactionPublic, TransactionsPublic
 
-        txs, total = await self._order_repo.get_transactions_by_user(
-            user_id, skip, limit
-        )
+        txs, total = await self._order_repo.get_transactions_by_user(user_id, skip, limit)
         return TransactionsPublic(
             transactions=[TransactionPublic.model_validate(t) for t in txs],
             total=total,

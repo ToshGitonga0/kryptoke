@@ -33,18 +33,14 @@ async def get_current_user(
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(
-            token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
-        )
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         token_data = TokenPayload(**payload)
         if token_data.sub is None:
             raise credentials_exception
     except JWTError:
         raise credentials_exception
 
-    result = await session.execute(
-        select(User).where(User.id == uuid.UUID(token_data.sub))
-    )
+    result = await session.execute(select(User).where(User.id == uuid.UUID(token_data.sub)))
     user = result.scalar_one_or_none()
     if user is None:
         raise credentials_exception

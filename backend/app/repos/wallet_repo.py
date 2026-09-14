@@ -12,25 +12,15 @@ class WalletRepository(AbstractRepository[Wallet]):
         self._session = session
 
     async def get_by_id(self, record_id: uuid.UUID) -> Wallet | None:
-        result = await self._session.execute(
-            select(Wallet).where(Wallet.id == record_id)
-        )
+        result = await self._session.execute(select(Wallet).where(Wallet.id == record_id))
         return result.scalar_one_or_none()
 
-    async def get_by_user_and_currency(
-        self, user_id: uuid.UUID, currency: str
-    ) -> Wallet | None:
-        result = await self._session.execute(
-            select(Wallet).where(
-                Wallet.user_id == user_id, Wallet.currency == currency.upper()
-            )
-        )
+    async def get_by_user_and_currency(self, user_id: uuid.UUID, currency: str) -> Wallet | None:
+        result = await self._session.execute(select(Wallet).where(Wallet.user_id == user_id, Wallet.currency == currency.upper()))
         return result.scalar_one_or_none()
 
     async def get_by_user(self, user_id: uuid.UUID) -> list[Wallet]:
-        result = await self._session.execute(
-            select(Wallet).where(Wallet.user_id == user_id)
-        )
+        result = await self._session.execute(select(Wallet).where(Wallet.user_id == user_id))
         return list(result.scalars().all())
 
     async def list_all(self) -> list[Wallet]:

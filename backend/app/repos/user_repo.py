@@ -20,18 +20,14 @@ class UserRepository(AbstractRepository[User]):
         return result.scalar_one_or_none()
 
     async def get_by_phone(self, phone: str) -> User | None:
-        result = await self._session.execute(
-            select(User).where(User.phone_number == phone)
-        )
+        result = await self._session.execute(select(User).where(User.phone_number == phone))
         return result.scalar_one_or_none()
 
     async def list_all(self) -> list[User]:
         result = await self._session.execute(select(User))
         return list(result.scalars().all())
 
-    async def list_paginated(
-        self, skip: int = 0, limit: int = 20
-    ) -> tuple[list[User], int]:
+    async def list_paginated(self, skip: int = 0, limit: int = 20) -> tuple[list[User], int]:
         from sqlalchemy import func
 
         count_result = await self._session.execute(select(func.count(User.id)))
