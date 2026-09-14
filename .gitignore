@@ -1,76 +1,182 @@
+# ============================================================
+
+# KryptoKE - .gitignore
+
+# ============================================================
+
+# ------------------------------------------------------------
+
 # macOS
+
+# ------------------------------------------------------------
+
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ------------------------------------------------------------
+
+# Environment / Secrets
+
+# ------------------------------------------------------------
+
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+
+# ------------------------------------------------------------
 
 # Python
-__pycache__/
+
+# ------------------------------------------------------------
+
+**pycache**/
 *.py[cod]
 *.pyo
 *.pyd
-*.pyc
-env/
-.env
-.venv
+
+# Virtual environments
+
+.venv/
 venv/
+env/
+ENV/
 backend/.venv/
-*.sqlite3
+
+# Testing / type checking / tooling
+
 .pytest_cache/
 .mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Python packaging
+
 build/
 dist/
 *.egg-info/
 
-# Node
+# Local databases
+
+*.sqlite
+*.sqlite3
+*.db
+
+# ------------------------------------------------------------
+
+# Node.js
+
+# ------------------------------------------------------------
+
 node_modules/
-frontend/.next/
-frontend/.turbo/
+
+# npm logs
+
 npm-debug.log*
+npm-error.log*
+
+# Yarn logs
+
 yarn-debug.log*
 yarn-error.log*
-pnpm-lock.yaml
-package-lock.json
+
+# pnpm logs
+
+pnpm-debug.log*
+
+# ------------------------------------------------------------
+
+# IMPORTANT:
+
+# Do NOT ignore package-lock.json.
+
+# It should be committed to Git when using npm.
+
+# ------------------------------------------------------------
+
+# ------------------------------------------------------------
 
 # Next.js
-.next/
-.next/cache/
-.vercel/
-out/
 
-# Editor directories and files
+# ------------------------------------------------------------
+
+.next/
+frontend/.next/
+frontend/out/
+frontend/.turbo/
+.vercel/
+
+# ------------------------------------------------------------
+
+# Frontend build / cache
+
+# ------------------------------------------------------------
+
+.turbo/
+.cache/
+
+# ------------------------------------------------------------
+
+# TypeScript
+
+# ------------------------------------------------------------
+
+*.tsbuildinfo
+
+# ------------------------------------------------------------
+
+# Editor / IDE
+
+# ------------------------------------------------------------
+
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
 
+# Vim / swap files
+
+*.swp
+*.swo
+*~
+
+# ------------------------------------------------------------
+
 # Logs
+
+# ------------------------------------------------------------
+
 *.log
 logs/
 
+# ------------------------------------------------------------
+
 # Docker
+
+# ------------------------------------------------------------
+
 **/docker-compose.override.yml
 
-# Misc
+# ------------------------------------------------------------
+
+# Temporary / backup files
+
+# ------------------------------------------------------------
+
 *.bak
-*.swp# Python
-__pycache__/
-*.py[cod]
-.venv/
-*.egg-info/
-dist/
-build/
+*.tmp
+*.temp
 
+# ------------------------------------------------------------
 
-# Env
-.env
-.env.local
-.env.*.local
+# Generated frontend files
 
-# Node
-node_modules/
-.next/
+# ------------------------------------------------------------
+
 frontend/src/client/
-
-# OS
-.DS_Store
-.idea/
-.vscode/
-*.swp
