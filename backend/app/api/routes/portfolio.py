@@ -11,7 +11,9 @@ router = APIRouter(prefix="/portfolio", tags=["portfolio"])
 
 
 def _portfolio_service(session: AsyncSession = Depends(get_db)) -> PortfolioService:
-    return PortfolioService(PortfolioRepository(session), AssetRepository(session))
+    portfolio_repo = PortfolioRepository(session)
+    asset_repo = AssetRepository(session)
+    return PortfolioService(portfolio_repo, asset_repo)
 
 
 @router.get("", response_model=PortfolioPublic)

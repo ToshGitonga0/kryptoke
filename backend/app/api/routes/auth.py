@@ -14,11 +14,14 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 
 def _auth_service(session: AsyncSession = Depends(get_db)) -> AuthService:
-    return AuthService(UserRepository(session))
+    user_repo = UserRepository(session)
+    return AuthService(user_repo)
 
 
 def _wallet_service(session: AsyncSession = Depends(get_db)) -> WalletService:
-    return WalletService(WalletRepository(session), OrderRepository(session))
+    wallet_repo = WalletRepository(session)
+    order_repo = OrderRepository(session)
+    return WalletService(wallet_repo, order_repo)
 
 
 @router.post("/register", response_model=Token, status_code=201)

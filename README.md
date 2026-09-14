@@ -15,7 +15,7 @@
 - [Screenshots](#screenshots)
 - [Features](#features)
 - [Prerequisites](#prerequisites)
-- [Quick Start](#quick-start)
+- [How to run the repo](#how-to-run-the-repo)
 - [Default Seed Credentials](#default-seed-credentials)
 - [Dev Runner](#dev-runner)
 - [Tech Stack](#tech-stack)
@@ -89,16 +89,16 @@ Before you begin, make sure the following are installed and available on your `P
 
 ---
 
-## Quick Start
+## How to run the repo
 
 ### Step 1 — One-time setup
 
-Clone the repo and run the quickstart script from the repo root:
+Clone the repo and run the `initial-setup.sh` script from the repo root:
 
 ```bash
 git clone https://github.com/ToshGitonga0/kryptoke.git
 cd kryptoke
-./scripts/quickstart.sh
+./scripts/initial-setup.sh
 ```
 
 The script will:
@@ -107,8 +107,8 @@ The script will:
 2. Prompt you for your PostgreSQL credentials and generate a `.env`
 3. Create a Python virtual environment and sync dependencies with `uv`
 4. Create the database if it doesn't exist
-5. Run Alembic migrations
-6. Seed the database with default users and crypto assets
+5. Setup backend (this includes Alembic migrations and seeding the database with default users and crypto assets)
+6. Setup frontend
 
 ### Step 2 — Start the project
 
@@ -188,12 +188,12 @@ If you prefer full control over each step:
 
 ```bash
 cd backend
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 uv sync
 cp .env.example .env        # edit DB_* and SECRET_KEY
-alembic upgrade head
-python seed.py
+uv run alembic upgrade head
+uv run python seed.py
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
@@ -233,7 +233,7 @@ kryptoke/
 │   ├── lib/              # API client, hooks, store
 │   └── public/
 ├── scripts/
-│   ├── quickstart-no-docker.sh
+│   ├── initial-setup.sh
 │   └── dev.sh
 ├── logs/
 └── docs/

@@ -17,7 +17,8 @@ router = APIRouter(prefix="/markets", tags=["markets"])
 
 
 def _market_service(session: AsyncSession = Depends(get_db)) -> MarketService:
-    return MarketService(AssetRepository(session))
+    asset_repo = AssetRepository(session)
+    return MarketService(asset_repo)
 
 
 @router.get("/assets", response_model=AssetsPublic)

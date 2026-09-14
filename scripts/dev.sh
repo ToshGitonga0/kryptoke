@@ -32,9 +32,7 @@ fi
 BACKEND_PORT=$(grep -E '^BACKEND_PORT=' "$ENV_FILE" | cut -d= -f2 | tr -d '"' || echo "8000")
 FRONTEND_PORT=$(grep -E '^FRONTEND_PORT=' "$ENV_FILE" | cut -d= -f2 | tr -d '"' || echo "3000")
 
-# ----------------------------
 # BACKEND
-# ----------------------------
 start_backend() {
   print_step "Starting backend"
 
@@ -70,9 +68,7 @@ stop_backend() {
   fi
 }
 
-# ----------------------------
 # FRONTEND
-# ----------------------------
 start_frontend() {
   print_step "Starting frontend"
 
@@ -105,9 +101,7 @@ stop_frontend() {
   fi
 }
 
-# ----------------------------
 # LOGS
-# ----------------------------
 show_logs() {
   case "${1:-both}" in
     backend)  tail -f "$LOG_DIR/backend.log" ;;
@@ -117,9 +111,7 @@ show_logs() {
   esac
 }
 
-# ----------------------------
 # USAGE
-# ----------------------------
 usage() {
   printf "\n${CYAN}${BOLD}KryptoKE Dev Runner${NC}\n\n"
   printf "Usage: %s <command> [target]\n\n" "$(basename "$0")"
@@ -136,9 +128,7 @@ usage() {
   printf "  ./scripts/dev.sh logs backend\n\n"
 }
 
-# ----------------------------
 # MAIN
-# ----------------------------
 COMMAND="${1:-}"
 TARGET="${2:-both}"
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-trap 'printf "\n❌ Script failed at line %s\n" "$LINENO"; exit 1' ERR
+trap 'printf "\n Script failed at line %s\n" "$LINENO"; exit 1' ERR
 
 REPO_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 BACKEND_DIR="$REPO_ROOT/backend"
@@ -27,9 +27,7 @@ print_error()   { printf "${RED}✗  %s${NC}\n" "$*"; }
 
 command_exists() { command -v "$1" >/dev/null 2>&1; }
 
-# ----------------------------
 # 1. PREREQUISITES
-# ----------------------------
 check_prereqs() {
   print_step "Checking prerequisites"
 
@@ -50,15 +48,13 @@ check_prereqs() {
   print_success "All prerequisites installed"
 }
 
-# ----------------------------
 # 2. CONFIG
-# ----------------------------
 get_config() {
   print_step "Project configuration"
 
   read -r  -p "DB name [kryptoke]: "       DB_NAME;       DB_NAME=${DB_NAME:-kryptoke}
   read -r  -p "DB user [postgres]: "       DB_USER;       DB_USER=${DB_USER:-postgres}
-  read -rsp "DB password: "                DB_PASSWORD;   echo ""
+  read -rsp   "DB password: "              DB_PASSWORD;   echo ""
   read -r  -p "DB host [localhost]: "      DB_HOST;       DB_HOST=${DB_HOST:-localhost}
   read -r  -p "DB port [5432]: "           DB_PORT;       DB_PORT=${DB_PORT:-5432}
   read -r  -p "Frontend port [3000]: "     FRONTEND_PORT; FRONTEND_PORT=${FRONTEND_PORT:-3000}
@@ -69,9 +65,7 @@ get_config() {
   print_success "Config captured"
 }
 
-# ----------------------------
 # 3. ENV FILE
-# ----------------------------
 write_env() {
   print_step "Writing .env"
 
@@ -95,9 +89,7 @@ EOF
   print_success ".env written → $ENV_FILE"
 }
 
-# ----------------------------
 # 4. WAIT FOR POSTGRES
-# ----------------------------
 wait_for_db() {
   print_step "Waiting for Postgres"
 
@@ -114,9 +106,7 @@ wait_for_db() {
   exit 1
 }
 
-# ----------------------------
 # 5. DATABASE
-# ----------------------------
 setup_database() {
   print_step "Setting up database"
 
@@ -137,10 +127,8 @@ setup_database() {
   print_success "Connection verified"
 }
 
-# ----------------------------
 # 6. BACKEND
-# ----------------------------
-setup_and_start_backend() {
+setup_backend() {
   print_step "Backend setup"
 
   cd "$BACKEND_DIR"
@@ -162,20 +150,10 @@ setup_and_start_backend() {
   print_info "Seeding database…"
   uv run python seed.py || { print_error "seed.py failed — check output above"; exit 1; }
   print_success "Seed data inserted"
-
-  nohup uvicorn app.main:app \
-    --host 0.0.0.0 \
-    --port "$BACKEND_PORT" \
-    > "$LOG_DIR/backend.log" 2>&1 &
-
-  echo $! > "$LOG_DIR/backend.pid"
-  print_success "Backend → http://localhost:${BACKEND_PORT}/docs  (pid $(cat "$LOG_DIR/backend.pid"))"
 }
 
-# ----------------------------
 # 7. FRONTEND
-# ----------------------------
-setup_and_start_frontend() {
+setup_frontend() {
   print_step "Frontend setup"
 
   cd "$FRONTEND_DIR"
@@ -184,56 +162,24 @@ setup_and_start_frontend() {
     npm install
   fi
   print_success "Frontend deps installed"
-
-  nohup npm run dev \
-    > "$LOG_DIR/frontend.log" 2>&1 &
-
-  echo $! > "$LOG_DIR/frontend.pid"
-  print_success "Frontend → http://localhost:${FRONTEND_PORT}  (pid $(cat "$LOG_DIR/frontend.pid"))"
 }
 
-# ----------------------------
-# 8. HEALTH CHECK
-# ----------------------------
-health_check() {
-  print_step "Health check"
-  sleep 5
 
-  if curl -sf "http://localhost:$BACKEND_PORT/docs" >/dev/null; then
-    print_success "Backend healthy"
-  else
-    print_warning "Backend may still be starting — check logs/backend.log"
-  fi
-}
-
-# ----------------------------
-# 9. SUMMARY
-# ----------------------------
+# 8. SUMMARY
 summary() {
   printf "\n"
   print_success "🚀 SYSTEM READY"
-  printf "%s\n" "--------------------------------"
-  printf "Frontend : http://localhost:%s\n"      "$FRONTEND_PORT"
-  printf "Backend  : http://localhost:%s/docs\n" "$BACKEND_PORT"
-  printf "Logs     : %s/\n"                      "$LOG_DIR"
-  printf "\nStop services:\n"
-  printf "  kill \$(cat logs/backend.pid)\n"
-  printf "  kill \$(cat logs/frontend.pid)\n"
-  printf "%s\n" "--------------------------------"
 }
 
-# ----------------------------
 # MAIN
-# ----------------------------
 main() {
   check_prereqs
   get_config
   write_env
   wait_for_db
   setup_database
-  setup_and_start_backend
-  setup_and_start_frontend
-  health_check
+  setup_backend
+  setup_frontend
   summary
 }
 

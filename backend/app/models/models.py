@@ -7,7 +7,7 @@ All table models use SQLModel; all response/request shapes are plain SQLModel
 import uuid
 from datetime import UTC, datetime
 from decimal import Decimal
-from enum import Enum
+from enum import StrEnum
 
 from pydantic import EmailStr
 from sqlalchemy import Column, Index, Numeric, UniqueConstraint
@@ -15,36 +15,36 @@ from sqlmodel import Field, Relationship, SQLModel
 
 
 # ── Enums ──────────────────────────────────────────────────────────────────
-class UserRole(str, Enum):
+class UserRole(StrEnum):
     CUSTOMER = "customer"
     STAFF = "staff"
     ADMIN = "admin"
 
 
-class KYCStatus(str, Enum):
+class KYCStatus(StrEnum):
     PENDING = "pending"
     VERIFIED = "verified"
     REJECTED = "rejected"
 
 
-class OrderSide(str, Enum):
+class OrderSide(StrEnum):
     BUY = "buy"
     SELL = "sell"
 
 
-class OrderType(str, Enum):
+class OrderType(StrEnum):
     MARKET = "market"
     LIMIT = "limit"
 
 
-class OrderStatus(str, Enum):
+class OrderStatus(StrEnum):
     OPEN = "open"
     FILLED = "filled"
     PARTIALLY_FILLED = "partially_filled"
     CANCELLED = "cancelled"
 
 
-class TransactionType(str, Enum):
+class TransactionType(StrEnum):
     DEPOSIT = "deposit"
     WITHDRAWAL = "withdrawal"
     TRADE_BUY = "trade_buy"
@@ -52,7 +52,7 @@ class TransactionType(str, Enum):
     FEE = "fee"
 
 
-class TransactionStatus(str, Enum):
+class TransactionStatus(StrEnum):
     PENDING = "pending"
     COMPLETED = "completed"
     FAILED = "failed"

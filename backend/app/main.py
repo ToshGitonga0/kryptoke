@@ -43,7 +43,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Core routes ────────────────────────────────────────────────────────
+# Core routes
 app.include_router(auth.router, prefix=settings.API_V1_STR)
 app.include_router(users.router, prefix=settings.API_V1_STR)
 app.include_router(markets.router, prefix=settings.API_V1_STR)
@@ -51,7 +51,7 @@ app.include_router(wallets.router, prefix=settings.API_V1_STR)
 app.include_router(portfolio.router, prefix=settings.API_V1_STR)
 app.include_router(orders.router, prefix=settings.API_V1_STR)
 
-# ── MVP routes ─────────────────────────────────────────────────────────
+# MVP routes
 app.include_router(mpesa.router, prefix=settings.API_V1_STR)
 app.include_router(notifications.router, prefix=settings.API_V1_STR)
 app.include_router(alerts.router, prefix=settings.API_V1_STR)
@@ -60,7 +60,7 @@ app.include_router(watchlist.router, prefix=settings.API_V1_STR)
 
 @app.get("/")
 async def root():
-    return {"message": "KryptoKE API 🌿", "version": "2.0.0", "docs": f"{settings.API_V1_STR}/docs"}
+    return {"message": "KryptoKE API", "version": "2.0.0", "docs": f"{settings.API_V1_STR}/docs"}
 
 
 @app.get("/health")

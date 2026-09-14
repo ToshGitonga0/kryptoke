@@ -18,7 +18,9 @@ router = APIRouter(prefix="/wallets", tags=["wallets"])
 
 
 def _wallet_service(session: AsyncSession = Depends(get_db)) -> WalletService:
-    return WalletService(WalletRepository(session), OrderRepository(session))
+    wallet_repo = WalletRepository(session)
+    order_repo = OrderRepository(session)
+    return WalletService(wallet_repo, order_repo)
 
 
 @router.get("", response_model=WalletsPublic)

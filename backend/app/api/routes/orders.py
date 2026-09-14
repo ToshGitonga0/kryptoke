@@ -24,12 +24,14 @@ router = APIRouter(prefix="/orders", tags=["orders"])
 
 def _trading_service(session: AsyncSession = Depends(get_db)) -> TradingService:
     order_repo = OrderRepository(session)
+    asset_repo = AssetRepository(session)
+    portfolio_repo = PortfolioRepository(session)
     wallet_repo = WalletRepository(session)
     wallet_svc = WalletService(wallet_repo, order_repo)
     return TradingService(
         order_repo,
-        AssetRepository(session),
-        PortfolioRepository(session),
+        asset_repo,
+        portfolio_repo,
         wallet_svc,
     )
 
@@ -77,6 +79,4 @@ async def list_trades(
 ) -> TradesPublic:
     repo = OrderRepository(session)
     trades, total = await repo.get_trades_by_user(current_user.id, skip, limit)
-    return TradesPublic(
-        trades=[TradePublic.model_validate(t) for t in trades], total=total
-    )
+    return TradesPublic(trades=[TradePublic.model_validate(t) for t in trades], total=total)
