@@ -45,7 +45,7 @@ start_backend() {
     > "$LOG_DIR/backend.log" 2>&1 &
 
   echo $! > "$LOG_DIR/backend.pid"
-  print_success "Backend → http://localhost:${BACKEND_PORT:-8000}/docs  (pid $(cat "$LOG_DIR/backend.pid"))"
+  print_success "Backend → http://localhost:${BACKEND_PORT:-8000}/api/v1/docs  (pid $(cat "$LOG_DIR/backend.pid"))"
 }
 
 stop_backend() {
