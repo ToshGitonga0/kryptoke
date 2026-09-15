@@ -40,6 +40,16 @@ const config: Config = {
           DEFAULT: "var(--destructive)",
           foreground: "var(--destructive-foreground)",
         },
+        // NEW — semantic state tokens, replace hardcoded hsl() greens/
+        // reds/yellows scattered through landing + dashboard.
+        success: {
+          DEFAULT: "var(--success)",
+          foreground: "var(--success-foreground)",
+        },
+        warning: {
+          DEFAULT: "var(--warning)",
+          foreground: "var(--warning-foreground)",
+        },
         border: "var(--border)",
         input: "var(--input)",
         ring: "var(--ring)",
@@ -60,6 +70,11 @@ const config: Config = {
           border: "var(--sidebar-border)",
           ring: "var(--sidebar-ring)",
         },
+        // Static brand/coin-icon palette — NOT a theme system. Used only
+        // for literal per-asset accent colors (e.g. CoinIcon), which are
+        // fixed brand colors regardless of light/dark mode. All *theme*
+        // decisions (primary accent, success/danger states, surfaces)
+        // must go through the semantic tokens above instead.
         jungle: {
           50: "#f0faf4",
           100: "#d8f3dc",
@@ -83,6 +98,8 @@ const config: Config = {
         sans: ["Plus Jakarta Sans", "system-ui", "sans-serif"],
         mono: ["IBM Plex Mono", "monospace"],
       },
+      // kept from the original config in case any existing component
+      // still references it — safe to remove once confirmed unused.
       backgroundImage: {
         "jungle-gradient": "linear-gradient(135deg, #081c15 0%, #1b4332 50%, #2d6a4f 100%)",
       },
