@@ -36,7 +36,9 @@ export default function AuthModal({ defaultTab = "login", onClose }: AuthModalPr
       await login(loginForm.email, loginForm.password);
       toast.success("Welcome back!");
       onClose();
-      router.push("/dashboard");
+      // Replace the landing-page history entry so the authenticated transition
+      // cannot briefly navigate back through the landing page.
+      router.replace("/dashboard");
     } catch (err: any) {
       toast.error(extractApiError(err));
     }
@@ -48,7 +50,7 @@ export default function AuthModal({ defaultTab = "login", onClose }: AuthModalPr
       await register(regForm);
       toast.success("Account created! Welcome to KryptoKE 🌿");
       onClose();
-      router.push("/dashboard");
+      router.replace("/dashboard");
     } catch (err: any) {
       toast.error(extractApiError(err));
     }
@@ -113,10 +115,7 @@ export default function AuthModal({ defaultTab = "login", onClose }: AuthModalPr
                   onChange={(e) => setLoginForm((f) => ({ ...f, email: e.target.value }))}
                   placeholder="james.mwangi@gmail.com"
                   className="w-full px-3.5 py-2.5 rounded-xl text-sm text-white placeholder:text-gray-600 outline-none transition-all"
-                  style={{
-                    background: "hsl(220 18% 8%)",
-                    border: "1px solid hsl(220 14% 20%)",
-                  }}
+                  style={{ background: "hsl(220 18% 8%)", border: "1px solid hsl(220 14% 20%)" }}
                   onFocus={(e) => { e.target.style.borderColor = "hsl(153 42% 45% / 0.7)"; e.target.style.boxShadow = "0 0 0 3px hsl(153 42% 45% / 0.12)"; }}
                   onBlur={(e)  => { e.target.style.borderColor = "hsl(220 14% 20%)"; e.target.style.boxShadow = "none"; }}
                 />
